@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { motion } from "motion/react";
-import { quickSpring } from "@/lib/motion";
+import { calmSpring, quickSpring } from "@/lib/motion";
 
 type SliderProps = {
   id: string;
@@ -76,9 +76,14 @@ export function ExperimentLab() {
           <Slider id="confidence" label="Confidence" value={confidence} min={0} max={100} step={1} display={`${confidence}%`} onChange={setConfidence} />
         </div>
         <div className="decision-output" aria-live="polite">
-          <div className="decision-orbit" aria-hidden="true">
+          <motion.div
+            className="decision-orbit"
+            animate={{ rotate: result.decision === "Scale" ? 120 : result.decision === "Stop" ? -120 : 0 }}
+            transition={calmSpring}
+            aria-hidden="true"
+          >
             {[0, 1, 2, 3, 4].map((item) => <i key={item} style={{ "--i": item } as React.CSSProperties} />)}
-          </div>
+          </motion.div>
           <p>Decision</p>
           <motion.h3 key={result.decision} initial={{ opacity: 0, y: 8, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={quickSpring}>{result.decision}</motion.h3>
           <strong>{result.next}</strong>

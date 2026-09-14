@@ -1,13 +1,15 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import { loopStages } from "@/content/product";
 import { calmSpring } from "@/lib/motion";
 
 export function ProductLoop() {
   const [[activeIndex, direction], setActive] = useState([0, 1]);
   const reduceMotion = useReducedMotion();
+  const stageRail = useRef<HTMLDivElement>(null);
+  const stageButtons = useRef<Array<HTMLButtonElement | null>>([]);
   const active = loopStages[activeIndex];
   const points = useMemo(
     () =>
@@ -17,6 +19,17 @@ export function ProductLoop() {
       }),
     [],
   );
+
+  useEffect(() => {
+    if (!window.matchMedia("(max-width: 720px)").matches) return;
+    const rail = stageRail.current;
+    const stage = stageButtons.current[activeIndex];
+    if (!rail || !stage) return;
+    rail.scrollTo({
+      left: stage.offsetLeft - (rail.clientWidth - stage.clientWidth) / 2,
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
+  }, [activeIndex, reduceMotion]);
 
   const selectStage = (index: number) => {
     if (index === activeIndex) return;
@@ -50,17 +63,39 @@ export function ProductLoop() {
         <p className="section-lede">Shipping is not the end of the product process. It is where <em>reality</em> enters it.</p>
       </div>
       <div className="loop-layout shell">
+        <div ref={stageRail} className="loop-mobile-stages" role="group" aria-label="Product-building stages">
+          {loopStages.map((stage, index) => (
+            <button
+              key={stage.id}
+              ref={(node) => { stageButtons.current[index] = node; }}
+              data-active={index === activeIndex}
+              data-complete={index < activeIndex}
+              onClick={() => selectStage(index)}
+              aria-pressed={index === activeIndex}
+            >
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <strong>{stage.label}</strong>
+              {index === activeIndex && (
+                <motion.i
+                  className="loop-mobile-indicator"
+                  layoutId="loop-mobile-indicator"
+                  transition={calmSpring}
+                  aria-hidden="true"
+                />
+              )}
+            </button>
+          ))}
+        </div>
         <div className="loop-orbit" role="group" aria-label="Interactive product-building loop">
           <svg viewBox="0 0 100 100" aria-hidden="true">
             <circle cx="50" cy="50" r="39" className="orbit-track" />
-            <motion.circle
+            <circle
               cx="50"
               cy="50"
               r="39"
+              pathLength="100"
               className="orbit-progress"
-              initial={false}
-              animate={{ pathLength: (activeIndex + 1) / loopStages.length }}
-              transition={calmSpring}
+              strokeDasharray={`${((activeIndex + 1) / loopStages.length) * 100} 100`}
             />
           </svg>
           {loopStages.map((stage, index) => (
@@ -86,24 +121,20 @@ export function ProductLoop() {
         </div>
         <div className="loop-readout" aria-live="polite">
           <div className="readout-count"><span>{String(activeIndex + 1).padStart(2, "0")}</span> / {loopStages.length}</div>
-          <AnimatePresence mode="popLayout" initial={false}>
-            <motion.div
-              key={active.id}
-              custom={direction}
-              initial={{ opacity: 0, x: direction * 18, scale: 0.985 }}
-              animate={{ opacity: 1, x: 0, scale: 1 }}
-              exit={{ opacity: 0, x: direction * -18, scale: 0.985 }}
-              transition={calmSpring}
-            >
-              <p>{active.label}</p>
-              <h3>{active.question}</h3>
-              <div className="readout-line" />
-              <p className="readout-detail">{active.detail}</p>
-              {activeIndex === loopStages.length - 1 && (
-                <p className="loop-completion-note">Loop complete. Continue into a worked product exercise.</p>
-              )}
-            </motion.div>
-          </AnimatePresence>
+          <motion.div
+            key={active.id}
+            initial={{ opacity: 0, x: direction * 18, scale: 0.985 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            transition={calmSpring}
+          >
+            <p>{active.label}</p>
+            <h3>{active.question}</h3>
+            <div className="readout-line" />
+            <p className="readout-detail">{active.detail}</p>
+            {activeIndex === loopStages.length - 1 && (
+              <p className="loop-completion-note">Loop complete. Continue into a worked product exercise.</p>
+            )}
+          </motion.div>
           <div className="loop-controls">
             <button onClick={previousStage} disabled={activeIndex === 0}>Previous</button>
             <button className="loop-next" onClick={nextStage}>

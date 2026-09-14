@@ -45,7 +45,7 @@ export function AppChrome() {
           <Mark size={22} />
           <span>Signal / Scale</span>
         </a>
-        <nav aria-label="Primary navigation">
+        <nav className="desktop-nav" aria-label="Primary navigation">
           {links.map(([id, label]) => (
             <a key={id} href={`#${id}`} aria-current={active === id ? "location" : undefined}>
               {label}
@@ -55,6 +55,25 @@ export function AppChrome() {
         <span className="header-state" aria-hidden="true">
           {active} <i /> decision
         </span>
+        <details className="mobile-index">
+          <summary>Index</summary>
+          <nav aria-label="Mobile navigation">
+            {links.map(([id, label], index) => (
+              <a
+                key={id}
+                href={`#${id}`}
+                aria-current={active === id ? "location" : undefined}
+                onClick={(event) => {
+                  const menu = event.currentTarget.closest("details");
+                  if (menu) menu.open = false;
+                }}
+              >
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                {label}
+              </a>
+            ))}
+          </nav>
+        </details>
       </header>
       <div className="page-progress" aria-hidden="true">
         <span style={{ transform: `scaleX(${progress})` }} />

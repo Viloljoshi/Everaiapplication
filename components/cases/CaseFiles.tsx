@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { caseFiles } from "@/content/product";
-import { calmSpring } from "@/lib/motion";
+import { quickSpring } from "@/lib/motion";
 
 export function CaseFiles() {
   const [openId, setOpenId] = useState(caseFiles[0].id);
@@ -36,10 +36,10 @@ export function CaseFiles() {
                   <motion.div
                     id={`case-${item.id}`}
                     className="case-body"
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={calmSpring}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={quickSpring}
                   >
                     <p className="case-thesis">{item.thesis}</p>
                     <div className="case-flow" aria-label={`${item.domain} system flow`}>
