@@ -1,5 +1,8 @@
 import { ImageResponse } from "next/og";
 
+// Render the OG image at build time so it works with `output: export`.
+export const dynamic = "force-static";
+
 export const alt = "From Signal to Scale: A Product Builder OS";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
