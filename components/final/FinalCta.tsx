@@ -13,7 +13,7 @@ export function FinalCta() {
           <p>What interests me about EverAI is where product judgment, AI capability, consumer behaviour and execution speed all meet.</p>
         </div>
         <div className="final-actions">
-          <a className="primary-action" href="https://github.com/Viloljoshi/Everaiapplication" target="_blank" rel="noreferrer" aria-label="Let's build — open the source repository in a new tab">Let&apos;s build <Arrow direction="up-right" /></a>
+          <a className="primary-action" href="https://github.com/Viloljoshi/Everaiapplication" target="_blank" rel="noreferrer" aria-label="Let's build. Open the source repository in a new tab">Let&apos;s build <Arrow direction="up-right" /></a>
           <details className="under-hood" id="under-the-hood">
             <summary>Under the hood <Arrow direction="down" /></summary>
             <div>

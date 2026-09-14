@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { calmSpring } from "@/lib/motion";
 
 const tensions = [
   ["Speed", "Certainty", "Move fastest where the decision is reversible. Buy certainty where failure is expensive or hard to detect."],
   ["Personalization", "Privacy", "Earn context through transparent value and user control. More memory is not automatically a better product."],
-  ["Engagement", "Well-being", "For emotionally significant AI products, quality must include agency, healthy boundaries and safety—not only session depth."],
+  ["Engagement", "Well-being", "For emotionally significant AI products, quality must include agency, healthy boundaries and safety, not only session depth."],
   ["Model quality", "Latency", "The best model on a benchmark can still be the wrong experience if the pause breaks conversational flow."],
   ["Automation", "Control", "Increase autonomy only where confidence, reversibility and observability justify it."],
   ["Growth", "Trust", "Compounding growth needs compounding trust. A metric win that damages confidence is product debt."],
@@ -33,8 +34,8 @@ export function JudgmentLab() {
           ))}
         </div>
         <div className="tension-detail" aria-live="polite">
-          <AnimatePresence mode="wait">
-            <motion.div key={item[0]} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+          <AnimatePresence mode="popLayout" initial={false}>
+            <motion.div key={item[0]} initial={{ opacity: 0, scale: 0.99 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.99 }} transition={calmSpring}>
               <p>{item[0]} <i /> {item[1]}</p>
               <blockquote>{item[2]}</blockquote>
             </motion.div>
@@ -52,7 +53,7 @@ export function JudgmentLab() {
           {network ? (
             <>
               <span className="collab-core">Build</span>
-              {['PM','Data','Design','Engineering','User'].map((label, index) => <motion.span className={`collab-node n${index}`} key={label} initial={{ opacity: 0, scale: 0.7 }} animate={{ opacity: 1, scale: 1 }}>{label}</motion.span>)}
+              {['PM','Data','Design','Engineering','User'].map((label, index) => <motion.span className={`collab-node n${index}`} key={label} initial={{ opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }} transition={{ ...calmSpring, delay: index * 0.025 }}>{label}</motion.span>)}
               <svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 50 50 10M50 50 14 34M50 50 86 34M50 50 22 82M50 50 78 82" /></svg>
             </>
           ) : (

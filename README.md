@@ -33,8 +33,8 @@ npm run build
 
 Most narrative data lives in:
 
-- `content/product.ts` — operating loop, case files, opportunity lenses and event taxonomy
-- `content/builder.ts` — AI-assisted build workspace
+- `content/product.ts`: operating loop, case files, opportunity lenses and event taxonomy
+- `content/builder.ts`: AI-assisted build workspace
 
 The more bespoke narrative sections are kept beside their rendering components so the relationship between interaction and copy remains explicit.
 

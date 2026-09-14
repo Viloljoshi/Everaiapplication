@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { calmSpring } from "@/lib/motion";
 
 const weeks = [
   {
@@ -42,8 +43,8 @@ export function FirstThirty() {
             </button>
           ))}
         </div>
-        <AnimatePresence mode="wait">
-          <motion.div className="week-panel" key={week.week} initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -8 }}>
+        <AnimatePresence mode="popLayout" initial={false}>
+          <motion.div className="week-panel" key={week.week} initial={{ opacity: 0, x: 14, scale: 0.995 }} animate={{ opacity: 1, x: 0, scale: 1 }} exit={{ opacity: 0, x: -14, scale: 0.995 }} transition={calmSpring}>
             <p>{week.week} / {week.verb}</p>
             <ol>{week.actions.map((action, index) => <li key={action}><span>{String(index + 1).padStart(2, "0")}</span>{action}</li>)}</ol>
             <div className="week-output"><span>Output</span><strong>{week.output}</strong></div>

@@ -56,7 +56,7 @@ export const caseFiles: CaseFile[] = [
       { label: "Context", body: "High-volume KYC/document product work using OCR, LLM extraction, confidence scoring and human-in-the-loop routing." },
       { label: "Measured outcome", body: "Approximately 45% less manual review and 25% faster API turnaround time." },
       { label: "Evaluation system", body: "Golden datasets, prompt/model versioning, LLM-as-judge where appropriate, and calibration and drift thinking." },
-      { label: "Product challenge", body: "Optimize precision, recall, latency, cost, coverage and human escalation as one operating decision—not separate dashboards." },
+      { label: "Product challenge", body: "Optimize precision, recall, latency, cost, coverage and human escalation as one operating decision, not separate dashboards." },
     ],
   },
   {

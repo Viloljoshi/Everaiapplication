@@ -5,7 +5,7 @@ export const builderTabs = [
     kicker: "Signal cluster",
     title: "Continuity breaks between sessions",
     body: "The retention drop is concentrated among users who complete a first conversation but do not reach a meaningful exchange in session two.",
-    lines: ["Cohort / newly activated", "Window / days 2–4", "Signal / cold re-entry", "Unknown / cause vs. correlation"],
+    lines: ["Cohort / newly activated", "Window / days 2 to 4", "Signal / cold re-entry", "Unknown / cause vs. correlation"],
   },
   {
     id: "spec",

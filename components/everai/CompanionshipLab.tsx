@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { eventTaxonomy, opportunities } from "@/content/product";
+import { calmSpring, quickSpring } from "@/lib/motion";
 
 const metricBranches = [
   ["Activation", "time to meaning", "first-session completion"],
@@ -14,9 +15,9 @@ const metricBranches = [
 ];
 
 export function CompanionshipLab() {
-  const [activeId, setActiveId] = useState(opportunities[0].id);
+  const [[activeIndex, direction], setActive] = useState([0, 1]);
   const [metric, setMetric] = useState(0);
-  const active = opportunities.find((item) => item.id === activeId) ?? opportunities[0];
+  const active = opportunities[activeIndex];
 
   return (
     <section className="everai-section section-pad" id="everai" aria-labelledby="everai-title">
@@ -28,13 +29,14 @@ export function CompanionshipLab() {
       <div className="opportunity-lab shell">
         <div className="opportunity-tabs" role="tablist" aria-label="Opportunity lenses">
           {opportunities.map((opportunity, index) => (
-            <button key={opportunity.id} role="tab" aria-selected={activeId === opportunity.id} onClick={() => setActiveId(opportunity.id)}>
+            <button key={opportunity.id} role="tab" aria-selected={active.id === opportunity.id} onClick={() => setActive([index, index >= activeIndex ? 1 : -1])}>
               <span>{String(index + 1).padStart(2, "0")}</span>{opportunity.title}
+              {active.id === opportunity.id && <motion.i className="tab-position" layoutId="opportunity-tab" transition={calmSpring} />}
             </button>
           ))}
         </div>
-        <AnimatePresence mode="wait">
-          <motion.div className="opportunity-panel" key={active.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}>
+        <AnimatePresence mode="popLayout" initial={false}>
+          <motion.div className="opportunity-panel" key={active.id} initial={{ opacity: 0, x: direction * 14, scale: 0.995 }} animate={{ opacity: 1, x: 0, scale: 1 }} exit={{ opacity: 0, x: direction * -14, scale: 0.995 }} transition={calmSpring}>
             <div className="opportunity-question">
               <p>Question</p>
               <h3>{active.question}</h3>
@@ -67,7 +69,7 @@ export function CompanionshipLab() {
             ))}
           </div>
           <div className="metric-leaves" aria-live="polite">
-            {metricBranches[metric].slice(1).map((leaf) => <motion.span key={leaf} initial={{ opacity: 0, x: -6 }} animate={{ opacity: 1, x: 0 }}>{leaf}</motion.span>)}
+            {metricBranches[metric].slice(1).map((leaf) => <motion.span key={leaf} initial={{ opacity: 0, x: -6 }} animate={{ opacity: 1, x: 0 }} transition={quickSpring}>{leaf}</motion.span>)}
           </div>
         </div>
       </div>

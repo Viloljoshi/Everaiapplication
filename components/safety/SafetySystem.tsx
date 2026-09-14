@@ -9,7 +9,7 @@ export function SafetySystem() {
           <p className="section-index">Safety + quality</p>
           <h2 id="safety-title">High engagement<br />requires higher trust.</h2>
         </div>
-        <p className="section-lede">For companionship products, trust is part of retention. Safety is a measurable product system—not a final moderation API call.</p>
+        <p className="section-lede">For companionship products, trust is part of retention. Safety is a measurable product system, not a final moderation API call.</p>
       </div>
       <div className="safety-system shell">
         <div className="safety-layers" aria-label="Layered product safety system">

@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "From Signal to Scale — A Product Builder OS";
+export const alt = "From Signal to Scale: A Product Builder OS";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -29,7 +29,7 @@ export default function OpenGraphImage() {
         <div style={{ display: "flex", fontSize: 104, letterSpacing: "-7px", lineHeight: 0.92, color: "#dde5ff" }}>TO SCALE.</div>
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: "18px", color: "#949bb0", fontSize: 20 }}>
-        Research <span style={{ color: "#315cff" }}>—</span> Prototype <span style={{ color: "#315cff" }}>—</span> Ship <span style={{ color: "#315cff" }}>—</span> Learn
+        Research <span style={{ color: "#315cff" }}>/</span> Prototype <span style={{ color: "#315cff" }}>/</span> Ship <span style={{ color: "#315cff" }}>/</span> Learn
       </div>
     </div>,
     size,

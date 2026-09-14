@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { calmSpring } from "@/lib/motion";
 
 const scales = [
   { id: "reach", number: 54_000_000, display: "54M", label: "unique-user reach", context: "A campaign/product experience operating across enormous consumer exposure." },
@@ -12,8 +13,8 @@ const scales = [
 const systemConcerns = ["Observability", "Progressive rollout", "Segmentation", "Latency", "Cost", "Fallbacks", "Abuse", "Drift", "Support", "Trust"];
 
 export function ScaleVisualization() {
-  const [activeId, setActiveId] = useState("reach");
-  const active = scales.find((scale) => scale.id === activeId) ?? scales[0];
+  const [[activeIndex, direction], setActive] = useState([0, 1]);
+  const active = scales[activeIndex];
   const rareEvents = useMemo(() => Math.round(active.number * 0.0001).toLocaleString("en-US"), [active.number]);
 
   return (
@@ -24,14 +25,14 @@ export function ScaleVisualization() {
       </div>
       <div className="shell scale-stage">
         <div className="scale-selector" role="tablist" aria-label="Scale examples">
-          {scales.map((scale) => (
-            <button key={scale.id} role="tab" aria-selected={activeId === scale.id} onClick={() => setActiveId(scale.id)}>
+          {scales.map((scale, index) => (
+            <button key={scale.id} role="tab" aria-selected={active.id === scale.id} onClick={() => setActive([index, index >= activeIndex ? 1 : -1])}>
               <strong>{scale.display}</strong><span>{scale.label}</span>
             </button>
           ))}
         </div>
-        <AnimatePresence mode="wait">
-          <motion.div className="scale-readout" key={active.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}>
+        <AnimatePresence mode="popLayout" initial={false}>
+          <motion.div className="scale-readout" key={active.id} initial={{ opacity: 0, x: direction * 14, scale: 0.995 }} animate={{ opacity: 1, x: 0, scale: 1 }} exit={{ opacity: 0, x: direction * -14, scale: 0.995 }} transition={calmSpring}>
             <div className="rare-math">
               <span>0.01%</span><i>×</i><span>{active.number.toLocaleString("en-US")}</span><i>=</i><strong>{rareEvents}</strong>
             </div>

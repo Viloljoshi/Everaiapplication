@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { motion } from "motion/react";
+import { quickSpring } from "@/lib/motion";
 
 type SliderProps = {
   id: string;
@@ -79,7 +80,7 @@ export function ExperimentLab() {
             {[0, 1, 2, 3, 4].map((item) => <i key={item} style={{ "--i": item } as React.CSSProperties} />)}
           </div>
           <p>Decision</p>
-          <motion.h3 key={result.decision} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>{result.decision}</motion.h3>
+          <motion.h3 key={result.decision} initial={{ opacity: 0, y: 8, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={quickSpring}>{result.decision}</motion.h3>
           <strong>{result.next}</strong>
           <p className="decision-reason">{result.reason}</p>
           <dl className="decision-metrics">

@@ -18,4 +18,4 @@ mobile:   [progress]
 
 ## Uniqueness review
 
-The first direction leaned toward a dark SaaS dashboard. That would have made the content feel like a set of portfolio cards, which the brief explicitly rejects. The revised direction uses a luminous continuous signal-line as the only recurring motif. Sections switch modes—editorial, diagnostic console, decision instrument, system map—because the artifact needs to show range without becoming decorative. Violet is reserved for changed state; blue marks live evidence. Rounded containers are used only where the user can operate something.
+The first direction leaned toward a dark SaaS dashboard. That would have made the content feel like a set of portfolio cards, which the brief explicitly rejects. The revised direction uses a luminous continuous signal-line as the only recurring motif. Sections switch modes: editorial, diagnostic console, decision instrument and system map. This range keeps the artifact varied without becoming decorative. Violet is reserved for changed state; blue marks live evidence. Rounded containers are used only where the user can operate something.

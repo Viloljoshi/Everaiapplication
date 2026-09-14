@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { caseFiles } from "@/content/product";
+import { calmSpring } from "@/lib/motion";
 
 export function CaseFiles() {
   const [openId, setOpenId] = useState(caseFiles[0].id);
@@ -38,7 +39,7 @@ export function CaseFiles() {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.36, ease: [0.22, 1, 0.36, 1] }}
+                    transition={calmSpring}
                   >
                     <p className="case-thesis">{item.thesis}</p>
                     <div className="case-flow" aria-label={`${item.domain} system flow`}>

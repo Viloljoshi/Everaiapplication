@@ -3,10 +3,11 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { builderTabs } from "@/content/builder";
+import { calmSpring } from "@/lib/motion";
 
 export function BuilderConsole() {
-  const [activeId, setActiveId] = useState("research");
-  const active = builderTabs.find((tab) => tab.id === activeId) ?? builderTabs[0];
+  const [[activeIndex, direction], setActive] = useState([0, 1]);
+  const active = builderTabs[activeIndex];
 
   return (
     <section className="builder-section section-pad" id="build" aria-labelledby="builder-title">
@@ -28,25 +29,26 @@ export function BuilderConsole() {
               key={tab.id}
               role="tab"
               id={`tab-${tab.id}`}
-              aria-selected={activeId === tab.id}
+              aria-selected={active.id === tab.id}
               aria-controls={`panel-${tab.id}`}
-              onClick={() => setActiveId(tab.id)}
+              onClick={() => setActive([index, index >= activeIndex ? 1 : -1])}
             >
               <span>{String(index + 1).padStart(2, "0")}</span>{tab.label}
+              {active.id === tab.id && <motion.i className="tab-position" layoutId="builder-tab" transition={calmSpring} />}
             </button>
           ))}
         </div>
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="popLayout" initial={false}>
           <motion.div
             className="builder-panel"
             key={active.id}
             role="tabpanel"
             id={`panel-${active.id}`}
             aria-labelledby={`tab-${active.id}`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            initial={{ opacity: 0, x: direction * 14, scale: 0.995 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: direction * -14, scale: 0.995 }}
+            transition={calmSpring}
           >
             <div className="builder-copy">
               <p className="panel-kicker">{active.kicker}</p>
